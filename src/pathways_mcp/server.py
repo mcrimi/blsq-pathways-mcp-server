@@ -3,7 +3,7 @@
 from pathlib import Path
 
 from dotenv import load_dotenv
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 
 from pathways_mcp.tools.segmentations import list_segmentations, get_segmentation
 from pathways_mcp.tools.segments import list_segments, get_segment_profile
