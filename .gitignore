@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# IDE / Editor
+.vscode/
+*.code-workspace
+.idea/
+*.swp
+*.swo
+*~
+
+# Cursor
+.cursor/
+
+# Claude / Cursor local settings
+.claude/
