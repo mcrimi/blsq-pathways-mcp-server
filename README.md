@@ -4,7 +4,11 @@ A [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server that e
 
 ## What it does
 
-This server connects to the Pathways Strapi CMS API and provides tools that let Claude (or any MCP client) explore population segmentation data:
+This server connects to the parameterized Pathways Strapi CMS API and provides tools, resources, and prompts that let Claude (or any MCP client) explore population segmentation data.
+
+### Tools — Data (Strapi API)
+
+These tools query the Pathways Strapi backend in real time and return structured data.
 
 | Tool | Description |
 |---|---|
@@ -18,7 +22,33 @@ This server connects to the Pathways Strapi CMS API and provides tools that let 
 | `list_regions` | Sub-national regions for a country |
 | `get_geographic_distribution` | Geographic distribution of segments across regions |
 
-**Example query this enables**: _"What is the best way to reach out to women in R4 in Tambacounda to improve family planning outcomes?"_
+### Tools — Context (static)
+
+These tools return static content from bundled `.md` files — analytical frameworks, ethical guidelines, and qualitative life stories. They shape how the AI reasons about Pathways data.
+
+| Tool | Description |
+|---|---|
+| `load_lens` | Six-domain vulnerability framework — load before any segment analysis |
+| `load_interventions` | Intervention design framework (levels, archetypes, transformative logic) |
+| `load_ethics` | Ethical guardrails for data use, communication, and AI reasoning |
+| `load_awihs_kenya` | Qualitative life stories from Kenya (Tana River, Turkana, Nairobi) |
+| `load_awihs_northern_nigeria` | Qualitative life stories from Northern Nigeria |
+| `load_awihs_bihar_india` | Qualitative life stories from Bihar, India |
+
+### Resources
+
+Resources should provide the frameworks and qualitative context that guide how the AI client should interpret Pathways data. They are what infuse the Pathways lens and framework into the conversation.
+
+Each resource is registered both as an MCP resource (URI-addressable via `pathways://…`) and as a callable tool (see above). Given that not all MCP clients make use of resources yet, so the dual registration helps us make sure that any client can load these frameworks into context when they are needed.
+
+| Resource | URI | Description |
+|---|---|---|
+| `load_lens` | `pathways://lens` | Six-domain vulnerability framework — load before any segment analysis |
+| `load_interventions` | `pathways://interventions` | Intervention design framework (levels, archetypes, transformative logic) |
+| `load_ethics` | `pathways://ethics` | Ethical guardrails for data use, communication, and AI reasoning |
+| `load_awihs_kenya` | `pathways://awihs_kenya` | Qualitative life stories from Kenya (Tana River, Turkana, Nairobi) |
+| `load_awihs_northern_nigeria` | `pathways://awihs_northern_nigeria` | Qualitative life stories from Northern Nigeria |
+| `load_awihs_bihar_india` | `pathways://awihs_bihar_india` | Qualitative life stories from Bihar, India |
 
 ## Prerequisites
 
@@ -43,26 +73,19 @@ cp .env.example .env
 # Edit .env and set PATHWAYS_API_TOKEN
 ```
 
-| Variable | Default | Description |
-|---|---|---|
-| `PATHWAYS_API_TOKEN` | _(required)_ | Strapi read-only API token |
-| `PATHWAYS_API_URL` | `https://api.staging.withpathways.org` | Strapi API base URL |
+| Variable |  Description |
+|---|---|
+| `PATHWAYS_API_TOKEN` | Strapi (read-only please) API token |
+| `PATHWAYS_API_URL` |  Strapi API base URL |
 
-## Running standalone
 
-```bash
-PATHWAYS_API_TOKEN=<your-token> python -m pathways_mcp.server
-```
-
-The server communicates over stdio using the MCP protocol. To test interactively, use the MCP Inspector:
+The server communicates over `stdio` using the MCP protocol. To test interactively, you can use the MCP Inspector:
 
 ```bash
-npx @modelcontextprotocol/inspector
+npx @modelcontextprotocol/inspector pathways-mcp 
 ```
 
-## Using with Claude
-
-### Claude Desktop
+## Using it with Claude Desktop
 
 Add this to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
@@ -95,8 +118,19 @@ pathways-mcp-server/
     └── pathways_mcp/
         ├── __init__.py
         ├── __main__.py         # python -m entry point
-        ├── server.py           # FastMCP server + tool registration
+        ├── server.py           # FastMCP server + tool/resource/prompt registration
         ├── api.py              # Strapi API client (httpx, auth, pagination)
+        ├── prompts.py          # Prompt definitions (read from prompts/*.md)
+        ├── prompts/
+        │   └── segment_deep_dive.md
+        ├── resources.py        # Resource definitions (read from resources/*.md)
+        ├── resources/
+        │   ├── lens.md
+        │   ├── interventions.md
+        │   ├── ethics.md
+        │   ├── awihs_kenya.md
+        │   ├── awihs_northern_nigeria.md
+        │   └── awihs_bihar_india.md
         └── tools/
             ├── __init__.py
             ├── segmentations.py
@@ -105,27 +139,6 @@ pathways-mcp-server/
             ├── variables.py
             ├── reference.py
             └── geography.py
-```
-
-## The Pathways Data Model
-
-Understanding this hierarchy is key to understanding all the tools.
-
-```
-Geography (e.g., Senegal)
-  └── Segmentation (e.g., SEN_2019DHS8_v1 — "Senegal 2019 DHS study")
-        ├── Segments (e.g., R1, R2, R3, R4, U1, U2... — distinct groups of women)
-        │     └── Metrics (a segment × variable pair = one data point)
-        │
-        └── Variables (the indicators measured, e.g., "Modern contraceptive use")
-              ├── linked to Themes   → describe Health Outcomes
-              └── linked to Domains  → describe Vulnerability Factors
-
-Themes  = categories of Health Outcomes  (e.g., Maternal Health, Nutrition)
-Domains = categories of Vulnerability Factors (e.g., Household Economics, Social Support)
-
-Regions = sub-national administrative areas within a Geography
-Geographic Distributions = what % of each region's population belongs to each segment
 ```
 
 ## The API Client (`api.py`)

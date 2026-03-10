@@ -4,12 +4,16 @@ from pathways_mcp.api import format_response, get_client
 
 
 async def list_segmentations() -> str:
-    """List all available Pathways segmentations (country-level studies).
+    """
+    List all available Pathways segmentations (country-level studies).
 
-    Each segmentation represents a population segmentation study for a specific
-    country, based on survey data (e.g., DHS). Use this to discover which
-    countries and studies are available. Only returns active, published
-    segmentations.
+    Each segmentation represents a population segmentation study for a specific country,
+    based on survey data (e.g., DHS or Pathways’ own surveys).
+
+    Use this tool to discover which countries and studies are available.
+
+    When referencing a segmentation in your responses, use the 'description' field,
+    as the 'code' is not meaningful to the user.
     """
     client = get_client()
     filters: dict = {"active": {"$eq": "true"}}
