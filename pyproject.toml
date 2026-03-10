@@ -19,3 +19,6 @@ pathways-mcp = "pathways_mcp.server:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+pathways_mcp = ["resources/*.md", "prompts/*.md"]
