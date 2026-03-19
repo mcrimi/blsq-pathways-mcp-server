@@ -30,11 +30,13 @@ mcp = FastMCP(
     "pathways",
     instructions=(
         "Pathways is a health segmentation platform providing woman-centered data "
-        "and insights for global health. Use these tools to explore country-level "
+        "and insights for global health interventions and programatic investments. Use these tools and resources to explore "
         "segmentations, understand population segments and their vulnerability profiles, "
         "query health outcome metrics (linked to Themes), and vulnerability factor metrics "
-        "(linked to Domains). Start with list_segmentations to discover available countries, "
+        "(linked to Domains). Start with list_segmentations to discover available segmentations and their countries, "
         "then drill into segments and metrics."
+        "Always begin data analysis by loading the Pathways analytical lens via load_lens tool or resource, this ensures correct interpretation of the data within the Pathways framework."
+        "Before designing, evaluating, or discussing interventions/programatic investments, load the interventions framework with load_interventions tool or resource."
     ),
 )
 

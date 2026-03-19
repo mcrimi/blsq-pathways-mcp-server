@@ -61,66 +61,7 @@ Where in the care pathway does this woman disengage, delay, or face an insurmoun
 
 ---
 
-## 4. Intervention Archetypes by Segment Profile
-
-### Profile A: High Isolation / Low Agency / Rural
-*Markers: absent or migrant partner, no independent income, low education, strong gender-norm enforcement by in-laws, poor facility access*
-
-**Priority interventions:**
-- Community-based care delivery (bring services to the woman, not vice versa)
-- Trusted-intermediary models: train and deploy ASHAs or community health workers from within the community
-- Co-wife and mother-in-law engagement — these women are often the *de facto* health gatekeepers
-- Savings and livelihood groups to build incremental economic agency
-- Male partner engagement when partner is present (festival visits), recognising the narrow window
-
-**Avoid:** Facility-only programming; information campaigns that assume literacy or mobile phone ownership; interventions that require individual decision-making without addressing household power dynamics
-
----
-
-### Profile B: Urban / Economically Active / Socially Isolated
-*Markers: female-headed household, multiple union histories, informal work, moderate mobility, high exposure to urban risk, children from different partners, weak family support network*
-
-**Priority interventions:**
-- Evening or weekend ANC/postnatal services compatible with irregular work schedules
-- Community-based childcare to reduce the care burden that crowds out health-seeking
-- Economic stabilisation: savings groups, micro-credit, stable income pathways
-- Mental health and psychosocial support — this profile carries high cumulative trauma load
-- Social connection: peer groups of women in similar situations
-
-**Avoid:** Assuming mobile phone access or digital literacy; assuming partner support; scheduling services during standard working hours
-
----
-
-### Profile C: Moderate Vulnerability / Educated / Norm-Constrained
-*Markers: completed secondary school, supportive partner, but constrained by in-law authority, inaccurate health beliefs, reluctance to challenge household norms*
-
-**Priority interventions:**
-- Husband/family engagement to shift from passive to active support of facility care and family planning
-- Accurate health information delivered through trusted channels (not authoritarian health worker tone)
-- Peer networks of similarly positioned women who have navigated norm constraints
-- IUCD/contraception counselling that addresses misinformation without dismissing concerns
-- Strengthen the woman's own health agency through knowledge that she can act on within her relational constraints
-
-**Avoid:** Clinician-centred communication that bypasses household decision-makers; one-time information delivery without follow-up; pressuring individual behaviour change without addressing the relational context
-
----
-
-### Profile D: Climate-Affected / Nomadic / Structurally Excluded
-*Markers: climate shocks reducing food security and household income, nomadic or semi-nomadic movement, low facility access, FGM/C, very early marriage, no formal education*
-
-**Priority interventions:**
-- Mobile or outreach health services designed around seasonal migration patterns
-- Community-level integration of traditional birth attendants into facility referral networks
-- Emergency obstetric care provision at outpost level, not only district hospitals
-- Food and nutrition security programming integrated with maternal health
-- Long-cycle contraceptive options requiring minimal facility contact
-- Climate-adaptive livelihoods support
-
-**Avoid:** Assuming stable geographic location; assuming ability to attend scheduled clinic appointments; any intervention dependent on literacy or personal mobile ownership
-
----
-
-## 5. What Makes an Intervention Transformative (Not Just Transactional)
+## 4. What Makes an Intervention Transformative (Not Just Transactional)
 
 | Transactional (insufficient) | Transformative (target) |
 |---|---|
@@ -131,7 +72,7 @@ Where in the care pathway does this woman disengage, delay, or face an insurmoun
 
 ---
 
-## 6. Monitoring Interventions Against Segments
+## 5. Monitoring Interventions Against Segments
 
 Interventions must be monitored *by segment*, not only by aggregate outcome indicators.
 
@@ -141,7 +82,7 @@ Interventions must be monitored *by segment*, not only by aggregate outcome indi
 
 ---
 
-## 7. Cross-Sector Integration
+## 6. Cross-Sector Integration
 
 The six-domain vulnerability model makes clear that health outcomes cannot be addressed by the health sector alone. Effective Pathways-informed programmes identify linkages with:
 
