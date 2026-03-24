@@ -13,6 +13,21 @@ def _significance(pvalue: float) -> str | None:
     return None
 
 
+def _effective_pvalue(pvalue: float | None, categorical_pvalues: dict | None) -> float | None:
+    """Return the smallest meaningful p-value across pvalue and categorical_pvalues.
+
+    pvalue = 0 means 'not computed globally' for categorical variables — it is
+    excluded. The effective p-value is the minimum of any non-zero value found.
+    Returns None if no meaningful p-value exists (association should be skipped).
+    """
+    candidates: list[float] = []
+    if pvalue and pvalue > 0:
+        candidates.append(pvalue)
+    if categorical_pvalues and isinstance(categorical_pvalues, dict):
+        candidates.extend(v for v in categorical_pvalues.values() if isinstance(v, (int, float)) and v > 0)
+    return min(candidates) if candidates else None
+
+
 async def search_variable_associations(
     outcome_code: str | None = None,
     vulnerability_code: str | None = None,
@@ -27,8 +42,11 @@ async def search_variable_associations(
     - significant_outcomes: health outcomes significantly associated with a given
       vulnerability factor variable.
 
-    Each association record includes a p-value; p = 0 means no association and
-    is always excluded. Results are sorted by p-value ascending (strongest first).
+    Each association record includes a p-value and, for categorical variables,
+    per-category p-values in categorical_pvalues. For categorical variables the
+    global pvalue may be 0 (not computed) — the effective p-value is the minimum
+    across all categorical values. Records with no meaningful p-value are excluded.
+    Results are sorted by effective p-value ascending (strongest first).
 
     Each result includes a significance label:
     - "Significant"        (p ≤ 0.05)
@@ -78,21 +96,24 @@ async def search_variable_associations(
             return format_response({"associations": [], "pagination": {"total": 0}})
 
         for assoc in (variables[0].get("significant_vulnerabilities") or []):
-            pvalue = assoc.get("pvalue")
-            if not pvalue:
-                continue
             outcome = assoc.get("outcome") or {}
             vuln = assoc.get("vulnerability") or {}
             # Apply vulnerability_code filter if both were provided
             if vulnerability_code and vuln.get("code") != vulnerability_code:
+                continue
+            cat_pvalues = assoc.get("categorical_pvalues")
+            effective = _effective_pvalue(assoc.get("pvalue"), cat_pvalues)
+            if effective is None:
                 continue
             associations.append({
                 "outcome_code": outcome.get("code"),
                 "outcome_name": outcome.get("name_en"),
                 "vulnerability_code": vuln.get("code"),
                 "vulnerability_name": vuln.get("name_en"),
-                "pvalue": pvalue,
-                "significance": _significance(pvalue),
+                "pvalue": assoc.get("pvalue"),
+                "categorical_pvalues": cat_pvalues or None,
+                "effective_pvalue": effective,
+                "significance": _significance(effective),
             })
 
     else:
@@ -111,21 +132,24 @@ async def search_variable_associations(
             return format_response({"associations": [], "pagination": {"total": 0}})
 
         for assoc in (variables[0].get("significant_outcomes") or []):
-            pvalue = assoc.get("pvalue")
-            if not pvalue:
-                continue
             outcome = assoc.get("outcome") or {}
             vuln = assoc.get("vulnerability") or {}
+            cat_pvalues = assoc.get("categorical_pvalues")
+            effective = _effective_pvalue(assoc.get("pvalue"), cat_pvalues)
+            if effective is None:
+                continue
             associations.append({
                 "outcome_code": outcome.get("code"),
                 "outcome_name": outcome.get("name_en"),
                 "vulnerability_code": vuln.get("code"),
                 "vulnerability_name": vuln.get("name_en"),
-                "pvalue": pvalue,
-                "significance": _significance(pvalue),
+                "pvalue": assoc.get("pvalue"),
+                "categorical_pvalues": cat_pvalues or None,
+                "effective_pvalue": effective,
+                "significance": _significance(effective),
             })
 
-    associations.sort(key=lambda x: x["pvalue"])
+    associations.sort(key=lambda x: x["effective_pvalue"])
     total = len(associations)
     page = associations[offset: offset + limit]
 
