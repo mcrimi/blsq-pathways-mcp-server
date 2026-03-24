@@ -87,7 +87,7 @@ async def search_variable_associations(
     result = await client.fetch_collection(
         "variables",
         filters={"code": {"$eq": anchor_code}},
-        populate=[relation_field],
+        populate=[f"{relation_field}.outcome", f"{relation_field}.vulnerability"],
         page_size=1,
     )
 
@@ -101,35 +101,29 @@ async def search_variable_associations(
     associated = variables[0].get(relation_field) or []
     associations = []
 
-    for v in associated:
+    for assoc in associated:
+        outcome = assoc.get("outcome") or {}
+        vuln = assoc.get("vulnerability") or {}
+
         # Apply intersection filter if both codes were provided
-        if outcome_code and vulnerability_code and v.get("code") != vulnerability_code:
+        if outcome_code and vulnerability_code and vuln.get("code") != vulnerability_code:
             continue
 
-        cat_pvalues = v.get("categorical_pvalues")
-        effective = _effective_pvalue(v.get("pvalue"), cat_pvalues)
+        cat_pvalues = assoc.get("categorical_pvalues")
+        effective = _effective_pvalue(assoc.get("pvalue"), cat_pvalues)
         if effective is None:
             continue
 
-        entry = {
-            "outcome_code": outcome_code or v.get("code"),
-            "vulnerability_code": vulnerability_code or v.get("code"),
-            "name": v.get("name_en"),
-            "pvalue": v.get("pvalue"),
+        associations.append({
+            "outcome_code": outcome.get("code"),
+            "outcome_name": outcome.get("name_en"),
+            "vulnerability_code": vuln.get("code"),
+            "vulnerability_name": vuln.get("name_en"),
+            "pvalue": assoc.get("pvalue"),
             "categorical_pvalues": cat_pvalues or None,
             "effective_pvalue": effective,
             "significance": _significance(effective),
-        }
-
-        # When looking up by outcome, the associated variable IS the vulnerability
-        if outcome_code:
-            entry["vulnerability_code"] = v.get("code")
-            entry["outcome_code"] = outcome_code
-        else:
-            entry["outcome_code"] = v.get("code")
-            entry["vulnerability_code"] = vulnerability_code
-
-        associations.append(entry)
+        })
 
     associations.sort(key=lambda x: x["effective_pvalue"])
     total = len(associations)
