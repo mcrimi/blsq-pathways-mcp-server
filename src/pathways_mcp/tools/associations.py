@@ -21,76 +21,120 @@ async def search_variable_associations(
 ) -> str:
     """Find statistical associations between health outcome variables and vulnerability factors.
 
-    Uses the Variable Suggestions table, which stores pre-computed p-values
-    linking health outcomes (e.g., anc.1sttri) to vulnerability factors
-    (e.g., hh.computer). Results are sorted by p-value ascending (strongest
-    associations first). p = 0 means no association or not calculated and is
-    always excluded.
+    Associations are stored on the Variable collection:
+    - significant_vulnerabilities: vulnerability factors significantly associated
+      with a given health outcome variable.
+    - significant_outcomes: health outcomes significantly associated with a given
+      vulnerability factor variable.
 
-    Each result includes a significance description:
+    Each association record includes a p-value; p = 0 means no association and
+    is always excluded. Results are sorted by p-value ascending (strongest first).
+
+    Each result includes a significance label:
     - "Significant"        (p ≤ 0.05)
     - "Very Significant"   (p ≤ 0.01)
     - "Highly Significant" (p ≤ 0.001)
 
     Typical workflow:
     1. Use search_variables or list_themes_and_domains to find relevant variable codes.
-    2. Call this tool with an outcome_code to discover which vulnerability factors
-       are statistically associated with that health outcome.
+    2. Call with an outcome_code to discover which vulnerability factors are
+       statistically associated with that health outcome.
     3. Or pass a vulnerability_code to see which outcomes it is associated with.
 
     Args:
-        outcome_code: Filter by health outcome variable code (e.g., "anc.1sttri").
-        vulnerability_code: Filter by vulnerability factor variable code (e.g., "hh.computer").
+        outcome_code: Health outcome variable code (e.g., "anc.1sttri"). When provided,
+            returns vulnerability factors associated with this outcome.
+        vulnerability_code: Vulnerability factor variable code (e.g., "hh.computer").
+            When provided, returns health outcomes associated with this vulnerability.
+            If both outcome_code and vulnerability_code are given, results are filtered
+            to the intersection.
         limit: Maximum number of associations to return (default 50, max 100).
         offset: Number of records to skip for pagination (default 0).
     """
-    client = get_client()
-    limit = min(limit, 100)
-    page = (offset // limit) + 1
-
-    filters: dict = {
-        "pvalue": {"$gt": "0"},
-    }
-
-    if outcome_code:
-        filters["outcome"] = {"code": {"$eq": outcome_code}}
-
-    if vulnerability_code:
-        filters["vulnerability"] = {"code": {"$eq": vulnerability_code}}
-
-    result = await client.fetch_collection(
-        "variable-suggestions",
-        filters=filters,
-        populate=["outcome", "vulnerability"],
-        page=page,
-        page_size=limit,
-        sort="pvalue:asc",
-    )
-
-    pagination = result.get("meta", {}).get("pagination", {})
-    associations = []
-    for row in result.get("data", []):
-        pvalue = row.get("pvalue")
-        outcome = row.get("outcome") or {}
-        vuln = row.get("vulnerability") or {}
-
-        associations.append({
-            "outcome_code": outcome.get("code"),
-            "outcome_name": outcome.get("name_en"),
-            "vulnerability_code": vuln.get("code"),
-            "vulnerability_name": vuln.get("name_en"),
-            "pvalue": pvalue,
-            "significance": _significance(pvalue) if pvalue else None,
+    if not outcome_code and not vulnerability_code:
+        return format_response({
+            "error": "missing_filter",
+            "message": "Provide at least one of outcome_code or vulnerability_code.",
         })
 
-    output = {
-        "associations": associations,
-        "pagination": {
-            "total": pagination.get("total", 0),
-            "page": pagination.get("page", 1),
-            "page_size": pagination.get("pageSize", limit),
-            "page_count": pagination.get("pageCount", 1),
-        },
-    }
+    client = get_client()
+    limit = min(limit, 100)
 
-    return format_response(output)
+    associations = []
+
+    if outcome_code:
+        # Fetch the outcome variable and populate its significant vulnerabilities
+        result = await client.fetch_collection(
+            "variables",
+            filters={"code": {"$eq": outcome_code}},
+            populate=[
+                "significant_vulnerabilities.outcome",
+                "significant_vulnerabilities.vulnerability",
+            ],
+            page_size=1,
+        )
+        variables = result.get("data", [])
+        if not variables:
+            return format_response({"associations": [], "pagination": {"total": 0}})
+
+        for assoc in (variables[0].get("significant_vulnerabilities") or []):
+            pvalue = assoc.get("pvalue")
+            if not pvalue:
+                continue
+            outcome = assoc.get("outcome") or {}
+            vuln = assoc.get("vulnerability") or {}
+            # Apply vulnerability_code filter if both were provided
+            if vulnerability_code and vuln.get("code") != vulnerability_code:
+                continue
+            associations.append({
+                "outcome_code": outcome.get("code"),
+                "outcome_name": outcome.get("name_en"),
+                "vulnerability_code": vuln.get("code"),
+                "vulnerability_name": vuln.get("name_en"),
+                "pvalue": pvalue,
+                "significance": _significance(pvalue),
+            })
+
+    else:
+        # vulnerability_code only — fetch variable and populate its significant outcomes
+        result = await client.fetch_collection(
+            "variables",
+            filters={"code": {"$eq": vulnerability_code}},
+            populate=[
+                "significant_outcomes.outcome",
+                "significant_outcomes.vulnerability",
+            ],
+            page_size=1,
+        )
+        variables = result.get("data", [])
+        if not variables:
+            return format_response({"associations": [], "pagination": {"total": 0}})
+
+        for assoc in (variables[0].get("significant_outcomes") or []):
+            pvalue = assoc.get("pvalue")
+            if not pvalue:
+                continue
+            outcome = assoc.get("outcome") or {}
+            vuln = assoc.get("vulnerability") or {}
+            associations.append({
+                "outcome_code": outcome.get("code"),
+                "outcome_name": outcome.get("name_en"),
+                "vulnerability_code": vuln.get("code"),
+                "vulnerability_name": vuln.get("name_en"),
+                "pvalue": pvalue,
+                "significance": _significance(pvalue),
+            })
+
+    associations.sort(key=lambda x: x["pvalue"])
+    total = len(associations)
+    page = associations[offset: offset + limit]
+
+    return format_response({
+        "associations": page,
+        "pagination": {
+            "total": total,
+            "returned": len(page),
+            "offset": offset,
+            "limit": limit,
+        },
+    })
