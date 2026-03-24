@@ -90,10 +90,16 @@ async def get_segment_metrics(
             if cat_level:
                 entry["categorical_level"] = cat_level.get("name_en")
         else:
+            entry["count"] = m.get("count")
             entry["avg"] = m.get("avg")
             entry["avg_se"] = m.get("avg_se")
-            entry["median"] = m.get("median")
             entry["min"] = m.get("min")
+            entry["q1"] = m.get("q1")
+            entry["q1_se"] = m.get("q1_se")
+            entry["median"] = m.get("median")
+            entry["median_se"] = m.get("median_se")
+            entry["q3"] = m.get("q3")
+            entry["q3_se"] = m.get("q3_se")
             entry["max"] = m.get("max")
 
         metrics.append(entry)

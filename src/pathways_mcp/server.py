@@ -8,10 +8,11 @@ from fastmcp import FastMCP
 from pathways_mcp.tools.segmentations import list_segmentations, get_segmentation
 from pathways_mcp.tools.segments import list_segments, get_segment_profile
 from pathways_mcp.tools.metrics import get_segment_metrics
+from pathways_mcp.tools.associations import search_variable_associations
 from pathways_mcp.tools.variables import search_variables
 from pathways_mcp.tools.reference import list_themes_and_domains, list_regions
 from pathways_mcp.tools.geography import get_geographic_distribution
-from pathways_mcp.prompts import segment_deep_dive
+from pathways_mcp.prompts import segment_deep_dive, intervention_copilot
 from pathways_mcp.resources import (
     load_lens,
     load_interventions,
@@ -47,6 +48,7 @@ mcp.tool()(list_segments)
 mcp.tool()(get_segment_profile)
 mcp.tool()(get_segment_metrics)
 mcp.tool()(search_variables)
+mcp.tool()(search_variable_associations)
 mcp.tool()(list_themes_and_domains)
 mcp.tool()(list_regions)
 mcp.tool()(get_geographic_distribution)
@@ -69,6 +71,7 @@ mcp.resource("pathways://awihs_bihar_india")(load_awihs_bihar_india)
 
 # Register prompts
 mcp.prompt()(segment_deep_dive)
+mcp.prompt()(intervention_copilot)
 
 
 def main():
