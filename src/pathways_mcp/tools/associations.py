@@ -29,6 +29,7 @@ def _effective_pvalue(pvalue: float | None, categorical_pvalues: dict | None) ->
 
 
 async def search_variable_associations(
+    segmentation_code: str,
     outcome_code: str | None = None,
     vulnerability_code: str | None = None,
     limit: int = 50,
@@ -54,12 +55,15 @@ async def search_variable_associations(
     - "Highly Significant" (p ≤ 0.001)
 
     Typical workflow:
-    1. Use search_variables or list_themes_and_domains to find relevant variable codes.
-    2. Call with an outcome_code to discover which vulnerability factors are
+    1. Use list_segmentations to find the segmentation_code for the study of interest.
+    2. Use search_variables or list_themes_and_domains to find relevant variable codes.
+    3. Call with an outcome_code to discover which vulnerability factors are
        statistically associated with that health outcome.
-    3. Or pass a vulnerability_code to see which outcomes it is associated with.
+    4. Or pass a vulnerability_code to see which outcomes it is associated with.
 
     Args:
+        segmentation_code: Segmentation code (e.g., "NGA_SN_2024_DHS8_v1"). Variables
+            are scoped to a segmentation — always required.
         outcome_code: Health outcome variable code (e.g., "hb.1"). Returns the
             vulnerability factors significantly associated with this outcome.
         vulnerability_code: Vulnerability factor variable code (e.g., "hh.floor").
@@ -86,7 +90,10 @@ async def search_variable_associations(
 
     result = await client.fetch_collection(
         "variables",
-        filters={"code": {"$eq": anchor_code}},
+        filters={
+            "code": {"$eq": anchor_code},
+            "segmentation": {"code": {"$eq": segmentation_code}},
+        },
         populate=[f"{relation_field}.outcome", f"{relation_field}.vulnerability"],
         page_size=1,
     )
