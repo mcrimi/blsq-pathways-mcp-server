@@ -12,7 +12,7 @@ from pathways_mcp.tools.associations import search_variable_associations
 from pathways_mcp.tools.variables import search_variables
 from pathways_mcp.tools.reference import list_themes_and_domains, list_regions
 from pathways_mcp.tools.geography import get_geographic_distribution
-from pathways_mcp.prompts import segment_deep_dive, intervention_copilot
+from pathways_mcp.prompts import segment_deep_dive, intervention_copilot, assumption_challenges
 from pathways_mcp.resources import (
     load_lens,
     load_interventions,
@@ -72,6 +72,7 @@ mcp.resource("pathways://awihs_bihar_india")(load_awihs_bihar_india)
 # Register prompts
 mcp.prompt()(segment_deep_dive)
 mcp.prompt()(intervention_copilot)
+mcp.prompt()(assumption_challenges)
 
 
 def main():

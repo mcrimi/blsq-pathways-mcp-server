@@ -14,3 +14,9 @@ def segment_deep_dive(segment_name: str, country: str) -> str:
 def intervention_copilot() -> str:
     """Brainstorming partner for designing evidence-based, equity-centered interventions using Pathways data."""
     return (_PROMPTS_DIR / "intervention_copilot.md").read_text()
+
+
+def assumption_challenges(country: str) -> str:
+    """Generate three analytical findings that challenge common implementation assumptions using Pathways segmentation data."""
+    template = (_PROMPTS_DIR / "assumption_challenges.md").read_text()
+    return template.format(country=country)
