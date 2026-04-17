@@ -7,6 +7,7 @@
 ## Context
 
 Bihar is one of India's poorest and most populous states. The women in this series live in rural districts — Darbhanga, Gaya, Siwan — in households shaped by:
+
 - Deep patriarchal norms in which women's autonomy over marriage, reproduction, and health is severely constrained
 - Male out-migration for work in distant cities (Delhi, Mumbai), leaving women to manage households alone while remaining economically dependent on irregular remittances
 - Multi-generational joint family structures in which mothers-in-law hold significant authority over younger women's daily lives and health decisions
@@ -56,35 +57,3 @@ Bihar is one of India's poorest and most populous states. The women in this seri
 **Mitigating factors:** Higher education than most women in these stories. Supportive, present husband who can be "convinced to convince his mother." Relationship with eldest sister-in-law as trusted confidante. Access to a phone and information.
 
 **Friction points in care:** Misinformation about contraception (not corrected by husband); all significant decisions require male intermediary; workload and childcare burden means health crises go unaddressed for days; uncertain whether she can go to parental home for delivery (not her decision to make).
-
----
-
-## Cross-Cutting Patterns: Bihar
-
-The three Bihar stories reveal several recurring structural patterns that interventions must address:
-
-### 1. The Absent Partner as Structural Trap
-Male migration is an economic necessity, but it creates a double bind: women are left to manage households alone while lacking the authority to make decisions independently. Health decisions that require "asking husband" can take weeks to resolve via irregular phone contact — or are never resolved.
-
-### 2. The Mother-in-Law as Health Gatekeeper
-In all three households, the mother-in-law is a central figure in health decision-making. She can block immunisation, discourage clinic visits, and override the woman's own (and even clinicians') recommendations. Interventions that bypass this relationship will fail. Interventions that engage it constructively can succeed.
-
-### 3. Contraception Constrained by Relational Power
-Every woman in this series faces contraceptive barriers rooted not in access but in relational dynamics: husband opposition, fear of family discovery, misinformation reinforced by authority figures, or simply the inability to act on a personal decision without male intermediary.
-
-### 4. Poverty Forecloses Health-Seeking
-Clinic access costs money — transport, time off work, potential childcare costs. For women without independent income or household cash flow, a "free" health service remains effectively inaccessible. Economic shocks (husband's irregular remittance, sick child, bad crop) directly crowd out health-seeking behaviour.
-
-### 5. Childhood Deprivation Predicts Adult Vulnerability
-Across all three women: early school dropout (or truncation), food insecurity in childhood, and early marriage without consent or preparation reliably predict the subsequent cascade of reproductive health vulnerabilities. Prevention of adult vulnerability begins in childhood.
-
----
-
-## Implications for Intervention in This Context
-
-- **Home-based and community-level services** are essential; facility-only models will not reach the most vulnerable.
-- **Engage male partners** during the narrow window of annual return visits — this is when contraceptive conversations are possible.
-- **Invest in mother-in-law engagement** as a distinct strategy, not an afterthought.
-- **Economic stabilisation** (savings groups, income support) is a prerequisite for consistent health-seeking, not a separate sectoral concern.
-- **Contraceptive counselling** must address misinformation directly, through trusted intermediaries, and include strategies for women who must act covertly.
-- **ASHA and community health worker relationships** are critical assets — protect and resource them.

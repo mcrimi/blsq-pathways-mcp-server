@@ -6,7 +6,7 @@
 
 ## 1. The Core Principle: Transform the Pathway, Don't Just Provide a Service
 
-A Pathways-informed intervention does not merely deliver a service at the point of need. It addresses the **structural and relational conditions** that created the barrier to care in the first place.
+A Pathways-informed intervention does not merely deliver a service at the point of need. It addresses the vulnerability factors that created the barrier to care in the first place. If not addressing the vulnerability factors directly, it takes them into account when considering the intervention.
 
 Ask before recommending any intervention:
 > *If this woman receives this service, will the conditions that prevented her from accessing it before be changed? Or will the same barriers reappear for the next pregnancy, the next health event, the next generation?*
@@ -18,18 +18,18 @@ Ask before recommending any intervention:
 Pathways interventions operate at three levels. Effective programmes typically combine elements from more than one level.
 
 ### Level 1 — Individual & Household
-Targets the woman's agency, knowledge, and immediate relational environment.
-- Examples: antenatal group education in her settlement, birth preparedness coaching, peer support networks, mobile health information matched to her literacy level
+Targets the woman's agency, knowledge, resources to engage in healthy behaviours, and immediate relational environment.
+- Examples: group antenatal care in her settlement, birth preparedness coaching, peer support networks, community health worker visits, mobile health information matched to her literacy level
 - Constraint: Without addressing household dynamics (partner opposition, mother-in-law gatekeeping), individual-level gains are fragile
 
 ### Level 2 — Community & Social Norms
 Targets the cultural beliefs, gender norms, and community practices that shape behaviour across many households.
 - Examples: community dialogue engaging male partners and community leaders, savings groups that build economic agency, peer educator networks among co-wives, integration of traditional birth attendants into referral pathways
-- Constraint: Norm change is slow; requires sustained presence and community co-design
+- Constraint: Norm change is slow; requires sustained presence and community ownership
 
 ### Level 3 — Structural & Systems
 Targets infrastructure, policy, economic conditions, and health system quality.
-- Examples: funded transport to facilities, maternity waiting homes, outreach clinics that bring services to remote/nomadic populations, subsidised contraception, multi-sectoral food/nutrition support, climate-adaptive livelihoods programmes
+- Examples: funded emergency transport to facilities, maternity waiting homes, outreach clinics that bring services to remote/nomadic populations, subsidised contraception, multi-sectoral food/nutrition support, climate-adaptive livelihoods programmes
 - Constraint: Highest impact but requires coordination beyond health sector; longest lead time
 
 ---
@@ -40,16 +40,19 @@ Before proposing an intervention, map the target segment's dominant vulnerabilit
 
 ### Step 1: Identify the primary friction points in the Journey of Care
 Where in the care pathway does this woman disengage, delay, or face an insurmountable barrier?
-- Pre-pregnancy: knowledge gaps, contraceptive access/permission, nutrition
-- Pregnancy: ANC attendance, nutrition, partner/family decision-making, economic shocks
-- Delivery: facility preference vs. cultural birth practices, transport, trust in providers
-- Postnatal: exclusive breastfeeding, infant immunisation, maternal recovery, contraceptive uptake
+- **Pre-pregnancy:** knowledge gaps, contraceptive access/permission, nutrition
+- **Pregnancy:** ANC attendance, nutrition, partner/family decision-making, economic shocks
+- **Delivery:** facility preference vs. cultural birth practices, transport, trust in providers
+- **Postnatal:** exclusive breastfeeding, infant immunisation, maternal recovery, contraceptive uptake
+- **Other health services for women:** nutrition programs; primary health care
+- **Newborn and child health:** primary health care; care for small and sick newborns; nutrition
+- **Reproductive health care:** family planning services; post-abortion care
 
 ### Step 2: Classify the dominant vulnerability factors for this segment
 
 | Factor type | Intervention priority |
 |---|---|
-| **Baseline** (e.g. entrenched gender norms, persistent poverty) | Address with long-term structural or norm-change strategies; do not expect rapid resolution |
+| **Base** (e.g. entrenched gender norms, persistent poverty) | Address with long-term structural or norm-change strategies; do not expect rapid resolution |
 | **Amplifying** (e.g. partner absent, recent bereavement, drought) | Address with timely, responsive safety nets and community support mechanisms |
 | **Mitigating** (e.g. savings group membership, trusted ASHA, literate co-wife) | Identify and *amplify* existing protective factors; don't design past them |
 
@@ -72,17 +75,7 @@ Where in the care pathway does this woman disengage, delay, or face an insurmoun
 
 ---
 
-## 5. Monitoring Interventions Against Segments
-
-Interventions must be monitored *by segment*, not only by aggregate outcome indicators.
-
-- An intervention that improves ANC attendance for the least vulnerable segment while leaving the most vulnerable unchanged is a failure of targeting.
-- Pathways segmentation provides the baseline against which actual impact must be measured.
-- Disaggregate outcomes by segment. Ask: *which segments did we reach, and which did we not?*
-
----
-
-## 6. Cross-Sector Integration
+## 5. Cross-Sector Integration
 
 The six-domain vulnerability model makes clear that health outcomes cannot be addressed by the health sector alone. Effective Pathways-informed programmes identify linkages with:
 
@@ -94,3 +87,9 @@ The six-domain vulnerability model makes clear that health outcomes cannot be ad
 - **Social protection** (cash transfers, food assistance)
 
 When recommending interventions, specify the cross-sector linkages required and which actor is best positioned to lead each component.
+
+---
+
+## 6. Promote Health Equity
+
+Pathways promotes health equity: actively reducing unfair and avoidable differences in health between segments, especially those caused by social, economic, and structural disadvantages. Intervention design must be measured against whether it narrows these gaps, not merely whether it improves aggregate outcomes.
